@@ -1,4 +1,4 @@
-# text_me
+# TextMe-Realtime-Messanger One to One
 
 A new Flutter project.
 
