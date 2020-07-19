@@ -1,5 +1,6 @@
 class User {
   String name;
   String chatID;
-  User(this.name, this.chatID);
+  String phoneNumber;
+  User({this.name, this.chatID, this.phoneNumber});
 }

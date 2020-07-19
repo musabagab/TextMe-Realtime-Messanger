@@ -31,6 +31,9 @@ dependencies:
   scoped_model: ^1.0.1
   flutter_socket_io: ^0.6.0
   flutter_chat_bubble: ^1.0.2
+  firebase_core: ^0.4.5
+  firebase_auth: ^0.16.1
+  cloud_firestore: ^0.13.7
   
 
 

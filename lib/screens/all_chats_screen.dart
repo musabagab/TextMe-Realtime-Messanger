@@ -29,16 +29,19 @@ class _AllChatsPageState extends State<AllChatsPage> {
   Widget buildAllChatList() {
     return ScopedModelDescendant<ChatModel>(
       builder: (context, child, model) {
-        return ListView.builder(
-          itemCount: model.friendList.length,
-          itemBuilder: (BuildContext context, int index) {
-            User friend = model.friendList[index];
-            return ListTile(
-              title: Text(friend.name),
-              onTap: () => friendClicked(friend),
-            );
-          },
-        );
+        return model.isLoading
+            ? Center(child: CircularProgressIndicator())
+            : ListView.builder(
+                itemCount: model.users.length,
+                itemBuilder: (BuildContext context, int index) {
+                  User friend = model.users[index];
+                  print(friend.name);
+                  return ListTile(
+                    title: Text(friend.name),
+                    onTap: () => friendClicked(friend),
+                  );
+                },
+              );
       },
     );
   }
@@ -48,6 +51,7 @@ class _AllChatsPageState extends State<AllChatsPage> {
     return Scaffold(
       appBar: AppBar(
         title: Text('All Chats'),
+        automaticallyImplyLeading: false,
       ),
       body: buildAllChatList(),
     );

@@ -10,10 +10,8 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return ScopedModel(
       model: ChatModel(),
-      child: MaterialApp(
-        debugShowCheckedModeBanner: false,
-        home: AllChatsPage(),
-      ),
+      child:
+          MaterialApp(debugShowCheckedModeBanner: false, home: AllChatsPage()),
     );
   }
 }
