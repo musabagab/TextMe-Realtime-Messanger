@@ -5,7 +5,7 @@ import 'package:flutter_chat_bubble/clippers/chat_bubble_clipper_1.dart';
 import 'package:scoped_model/scoped_model.dart';
 import 'package:text_me/models/message.dart';
 import 'package:text_me/models/user.dart';
-import 'package:text_me/scoped_models/ChatModel.dart';
+import 'package:text_me/scoped_models/app_model.dart';
 
 class ChatPage extends StatefulWidget {
   final User friend;
@@ -53,7 +53,7 @@ class _ChatPageState extends State<ChatPage> {
   }
 
   Widget buildChatList() {
-    return ScopedModelDescendant<ChatModel>(
+    return ScopedModelDescendant<AppModel>(
       builder: (context, child, model) {
         List<Message> messages =
             model.getMessagesForChatID(widget.friend.chatID);
@@ -62,7 +62,7 @@ class _ChatPageState extends State<ChatPage> {
           height: MediaQuery.of(context).size.height * 0.75,
           child: ListView.builder(
             itemCount: messages.length,
-            controller: model.controller,
+            controller: model.listController,
             itemBuilder: (BuildContext context, int index) {
               return buildSingleMessage(messages[index]);
             },
@@ -73,12 +73,13 @@ class _ChatPageState extends State<ChatPage> {
   }
 
   Widget buildChatArea() {
-    return ScopedModelDescendant<ChatModel>(
+    return ScopedModelDescendant<AppModel>(
       builder: (context, child, model) {
         return Container(
           child: Row(
             children: <Widget>[
               Container(
+                padding: EdgeInsets.all(8),
                 width: MediaQuery.of(context).size.width * 0.8,
                 child: TextField(
                   controller: textEditingController,

@@ -1,89 +1,14 @@
-//* all the logic for socket and all the data will be stored.
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:scoped_model/scoped_model.dart';
-import 'package:flutter_socket_io/flutter_socket_io.dart';
-import 'package:flutter_socket_io/socket_io_manager.dart';
-
-import 'package:text_me/models/message.dart';
-import 'dart:convert';
-
 import 'package:text_me/models/user.dart';
 import 'package:text_me/screens/all_chats_screen.dart';
 
-class ChatModel extends Model {
-  List<User> users = List<User>();
-  User currentUser = User();
-  List<User> friendList = List<User>();
-  List<Message> messages = List<Message>();
-  SocketIO socketIO;
-  FirebaseAuth a;
-
-  bool isLoading = true;
-
-  final controller = ScrollController();
-
-  void init() async {
-    final FirebaseUser user = await FirebaseAuth.instance.currentUser();
-
-    currentUser.chatID = user.uid;
-    users = await getAllUsers();
-    isLoading = false;
-    notifyListeners();
-
-    friendList =
-        users.where((user) => user.chatID != currentUser.chatID).toList();
-
-    print(friendList.toString());
-    // todo put your server url here
-    socketIO = SocketIOManager().createSocketIO(
-        'https://chat-server-sockets.herokuapp.com/', '/',
-        query: 'chatID=${currentUser.chatID}');
-    socketIO.init();
-
-    socketIO.subscribe('receive_message', (jsonData) {
-      Map<String, dynamic> data = json.decode(jsonData);
-      messages.add(Message(
-          data['content'], data['senderChatID'], data['receiverChatID']));
-      notifyListeners(); // update UI
-      // Animate the lis to the lastest message
-      final animateToPostion = controller.position.maxScrollExtent + 100;
-
-      controller.animateTo(animateToPostion,
-          curve: Curves.linear, duration: Duration(milliseconds: 500));
-    });
-
-    socketIO.connect();
-  }
-
-  void sendMessage(String text, String receiverChatID) {
-    messages.add(Message(text, currentUser.chatID, receiverChatID));
-    socketIO.sendMessage(
-      'send_message',
-      json.encode({
-        'receiverChatID': receiverChatID,
-        'senderChatID': currentUser.chatID,
-        'content': text,
-      }),
-    );
-    notifyListeners();
-
-    // Animate the lis to the lastest message
-    final animateToPostion = controller.position.maxScrollExtent + 100;
-
-    controller.animateTo(animateToPostion,
-        curve: Curves.linear, duration: Duration(milliseconds: 500));
-  }
-
-  List<Message> getMessagesForChatID(String chatID) {
-    return messages
-        .where((msg) => msg.senderID == chatID || msg.receiverID == chatID)
-        .toList();
-  }
-
+mixin AuthenticationModel on Model {
   FirebaseAuth _auth = FirebaseAuth.instance;
+  User currentUser = User();
+
   final _codeController = TextEditingController();
 
   Future registerUser(String mobile, BuildContext context, String name) async {
@@ -175,27 +100,5 @@ class ChatModel extends Model {
     }).then((value) {
       print(value.documentID);
     });
-  }
-
-  Future<List<User>> getAllUsers() async {
-    final firestoreInstance = Firestore.instance;
-
-    List<User> allUsers = List();
-
-    await firestoreInstance
-        .collection("users")
-        .getDocuments()
-        .then((querySnapshot) {
-      querySnapshot.documents.forEach((result) {
-        allUsers.add(User(
-            name: result.data['name'],
-            chatID: result.data['userid'],
-            phoneNumber: result.data['phone']));
-
-        print(result.data);
-      });
-    });
-
-    return allUsers;
   }
 }
