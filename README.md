@@ -14,6 +14,12 @@
 <li>Flutter (<a href="https://flutter.dev/docs/get-started/install">https://flutter.dev/docs/get-started/install</a>).</li>
 </ul>
 <p><strong>App Screenshots:</strong></p>
+![](Screenshots/1.png)
+![](Screenshots/2.png)
+![](Screenshots/3.png)
+![](Screenshots/4.png)
+![](Screenshots/5.png)
+
 <p><strong>Getting started:</strong></p>
 <ul>
 <li>Star ⭐ and clone <em>this</em> repo (Flutter app).</li>
