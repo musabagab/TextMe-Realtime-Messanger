@@ -1,5 +1,5 @@
-<h1><strong>TextMe-Chat App [Flutter]</strong></h1>
-<p>This a real-time chat app build with Flutter and Dart using NodeJs and Firebase as backend.</p>
+﻿<h1><strong>TextMe-Chat App [Flutter]</strong></h1>
+<p>This is a real-time chat app built with Flutter and Dart using NodeJs and Firebase as a backend.</p>
 <p>Please Read Getting started steps at the bottom 👇</p>
 <p><strong>App Features:</strong></p>
 <ul>
