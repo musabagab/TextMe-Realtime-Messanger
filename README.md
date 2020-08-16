@@ -34,4 +34,4 @@
 <li>Make sure to enable in the Authentication section on the Sign-in Method tab: Sign in provider with Phone and you can use test numbers to test with your emulators.</li>
 <li>Enjoy.</li>
 </ul>
-<p><strong>Contact me for work: </strong><a href="mailto:musabapps2019@gmail.com"><strong>musabapps2019@gmail.com</strong></a></p>
+<p><strong>Contact me for work at this email: </strong><a href="mailto:musabapps2019@gmail.com"><strong>musabapps2019@gmail.com</strong></a></p>
